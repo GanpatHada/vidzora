@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+body {
+  font-family:"Inter","Sans-seriff";
+}
+
+.loader {
+    height: 24px;
+    aspect-ratio: 1;
+    border: 2px solid whitesmoke;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 0.5s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 
+
+.dot-loader::after {
+  content: " .";
+  color: white;          
+  
+  animation: dots 1.5s steps(3, end) infinite;
+}
+
+@keyframes dots {
+  0% { content: " ."; }
+  33% { content: " . ."; }
+  66% { content: " . . ."; }
+  100% { content: " ."; }
+}    
