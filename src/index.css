@@ -2,6 +2,27 @@
 
 body {
   font-family:"Inter","Sans-seriff";
+  background: #000;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;             /* width of the scrollbar */
+  height: 8px;            /* height for horizontal scrollbar */
+  background-color: #000; /* background behind the scrollbar */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* color of the draggable thumb */
+  border-radius: 4px;        /* rounded corners for the thumb */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #6b7280; /* hover color */
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #000;    /* track behind the thumb */
+  border-radius: 4px;
 }
 
 .loader {
@@ -36,4 +57,21 @@ body {
   33% { content: " . ."; }
   66% { content: " . . ."; }
   100% { content: " ."; }
-}    
+}   
+
+@keyframes wave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-wave {
+  animation: wave 6s ease-in-out infinite;
+  background-size: 200% 200%;
+}
