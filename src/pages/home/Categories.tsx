@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import categories from "../../data/categories.json";
+import categories from "../../data/Categories.json";
 import { useVideoStore } from "../../store/videoStore";
 
 const Categories: React.FC = () => {
@@ -57,7 +57,7 @@ const Categories: React.FC = () => {
           className="flex flex-nowrap gap-3 overflow-x-auto no-scrollbar w-full"
           onScroll={updateScrollButtons}
         >
-          {categories.map((cat) => (
+          {categories.map((cat:{id:number,name:string}) => (
             <button
               key={cat.id}
               onClick={() => setCategory(cat.name)}

@@ -1,12 +1,12 @@
 import { create } from "zustand";
 import { fetchPopularVideos, searchVideos } from "../services/VideoService";
-import categories from "../data/categories.json";
+import categories from "../data/Categories.json";
 
 const getCategoryFromTags = (tags: string): string => {
   const tagList = tags.split(", ");
   for (const tag of tagList) {
     const foundCategory = categories.find(
-      (cat) => cat.name.toLowerCase() === tag.toLowerCase(),
+      (cat:{id:number,name:string}) => cat.name.toLowerCase() === tag.toLowerCase(),
     );
     if (foundCategory) {
       return foundCategory.name;
