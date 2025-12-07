@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TextField, Button } from "@mui/material";
-import { IoIosArrowForward, IoIosArrowRoundBack, IoMdClose } from "react-icons/io";
+import {
+  IoIosArrowForward,
+  IoIosArrowRoundBack,
+  IoMdClose,
+} from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
 import validator from "validator";
 import { supabase } from "../../supabaseClient";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../store/userStore";
 
 interface UserCredentialsProps {
   showOtpScreen: () => void;
@@ -12,13 +18,16 @@ interface UserCredentialsProps {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const UserCredentials: React.FC<UserCredentialsProps> = ({ showOtpScreen, email, setEmail }) => {
-  const [emailError, setEmailError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+const UserCredentials: React.FC<UserCredentialsProps> = ({
+  showOtpScreen,
+  email,
+  setEmail,
+}) => {
+  const [emailError, setEmailError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSendOtp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!validator.isEmail(email.trim())) {
       setEmailError(true);
       return;
@@ -26,14 +35,15 @@ const UserCredentials: React.FC<UserCredentialsProps> = ({ showOtpScreen, email,
 
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signInWithOtp({ email: email.trim() });
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email.trim(),
+      });
       if (error) {
         toast.error(error.message);
         return;
       }
       showOtpScreen();
-    } catch (err: any) {
-      console.error(err);
+    } catch {
       toast.error("Something went wrong!");
     } finally {
       setLoading(false);
@@ -41,7 +51,10 @@ const UserCredentials: React.FC<UserCredentialsProps> = ({ showOtpScreen, email,
   };
 
   return (
-    <form className="flex flex-col flex-1 justify-between" onSubmit={handleSendOtp}>
+    <form
+      className="flex flex-col flex-1 justify-between"
+      onSubmit={handleSendOtp}
+    >
       <div>
         <div className="relative">
           <TextField
@@ -60,10 +73,17 @@ const UserCredentials: React.FC<UserCredentialsProps> = ({ showOtpScreen, email,
               label: { color: emailError ? "red" : "#71717a" },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": { borderColor: emailError ? "red" : "#52525b" },
-                "&:hover fieldset": { borderColor: emailError ? "red" : "#52525b" },
-                "&.Mui-focused fieldset": { borderColor: emailError ? "red" : "#71717a", borderWidth: "1px" },
+                "&:hover fieldset": {
+                  borderColor: emailError ? "red" : "#52525b",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: emailError ? "red" : "#71717a",
+                  borderWidth: "1px",
+                },
               },
-              "& .MuiInputLabel-root.Mui-focused": { color: emailError ? "red" : "#71717a" },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: emailError ? "red" : "#71717a",
+              },
             }}
           />
           {email.trim().length > 0 && (
@@ -80,9 +100,14 @@ const UserCredentials: React.FC<UserCredentialsProps> = ({ showOtpScreen, email,
           )}
         </div>
 
-        {emailError && <p className="text-red-500 text-xs mt-2">Invalid email, Please try again</p>}
+        {emailError && (
+          <p className="text-red-500 text-xs mt-2">
+            Invalid email, Please try again
+          </p>
+        )}
         <p className="text-slate-400 text-xs mt-3">
-          By proceeding, you confirm that you have read and agree to the Terms & Conditions and Privacy Policy.
+          By proceeding, you confirm that you have read and agree to the Terms &
+          Conditions and Privacy Policy.
         </p>
       </div>
 
@@ -111,7 +136,9 @@ const UserCredentials: React.FC<UserCredentialsProps> = ({ showOtpScreen, email,
             <IoIosArrowForward />
           </>
         ) : (
-          <>Sending OTP &nbsp;<span className="loader"></span></>
+          <>
+            Sending OTP &nbsp;<span className="loader"></span>
+          </>
         )}
       </Button>
     </form>
@@ -130,6 +157,8 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
   const [isTimerActive, setIsTimerActive] = useState(true);
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
+  const navigate = useNavigate();
+  const { setUser } = useUserStore();
 
   useEffect(() => {
     if (!isTimerActive) return;
@@ -143,21 +172,21 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
         return prev - 1;
       });
     }, 1000);
-
     return () => clearInterval(timer);
   }, [isTimerActive]);
 
   const handleChange = (value: string, index: number) => {
     if (!/^[0-9]?$/.test(value)) return;
-
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-
     if (value && index < 5) inputRefs.current[index + 1]?.focus();
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, index: number) => {
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    index: number
+  ) => {
     if (e.key === "Backspace" && otp[index] === "" && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
@@ -170,15 +199,65 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
 
     setLoading(true);
     try {
-      const { error } = await supabase.auth.verifyOtp({ email, token: enteredOtp, type: "email" });
-      if (error) {
-        toast.error(error.message);
+      const { data: { session }, error: otpError } = await supabase.auth.verifyOtp({
+        email,
+        token: enteredOtp,
+        type: "email",
+      });
+
+      if (otpError) {
+        toast.error(otpError.message);
         setLoading(false);
         return;
       }
+
+      if (!session) {
+        toast.error("Could not verify OTP. Please try again.");
+        setLoading(false);
+        return;
+      }
+      
       toast.success("OTP verified successfully");
-    } catch {
-      toast.error("Something went wrong");
+      
+      const user = session.user;
+
+      // Check if user exists in our public `users` table
+      const { data: existingUser, error: fetchError } = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (fetchError) {
+        throw fetchError;
+      }
+
+      let finalUser = existingUser;
+
+      // If user does not exist in our table, create them
+      if (!existingUser) {
+        const { data: newUser, error: insertError } = await supabase
+          .from("users")
+          .insert({
+            id: user.id,
+            email: user.email,
+            created_at: new Date().toISOString(),
+          })
+          .select()
+          .single();
+
+        if (insertError) {
+          toast.error("Failed to create user profile.");
+          return;
+        }
+        finalUser = newUser;
+      }
+
+      setUser(finalUser);
+      toast.success("Welcome!");
+      navigate("/");
+    } catch (err: any) {
+      toast.error(err.message || "An unexpected error occurred.");
     } finally {
       setLoading(false);
     }
@@ -188,7 +267,10 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
     setResendLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOtp({ email });
-      if (error) return toast.error(error.message);
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
       toast.success("OTP sent again");
       setRemainingSeconds(120);
       setIsTimerActive(true);
@@ -200,7 +282,10 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
   };
 
   return (
-    <form className="flex flex-col justify-between flex-1" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col justify-between flex-1"
+      onSubmit={handleSubmit}
+    >
       <div className="flex flex-col space-y-4">
         <button
           type="button"
@@ -295,7 +380,9 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
             <IoIosArrowForward />
           </>
         ) : (
-          <>Verifying &nbsp;<span className="loader"></span></>
+          <>
+            Verifying &nbsp;<span className="loader"></span>
+          </>
         )}
       </Button>
     </form>
@@ -330,24 +417,31 @@ const Auth: React.FC = () => {
                 className="flex-1 flex"
                 key="otp"
                 variants={variants}
-                initial="visible"
+                initial="hidden"
                 animate="visible"
                 exit="exit"
                 transition={{ duration: 0.3 }}
               >
-                <OtpScreen showUserCredential={showUserCredential} email={email} />
+                <OtpScreen
+                  showUserCredential={showUserCredential}
+                  email={email}
+                />
               </motion.div>
             ) : (
               <motion.div
                 key="credentials"
                 className="flex-1 flex"
                 variants={variants}
-                initial="visible"
+                initial="hidden"
                 animate="visible"
                 exit="exit"
                 transition={{ duration: 0.3 }}
               >
-                <UserCredentials showOtpScreen={showOtpScreen} email={email} setEmail={setEmail} />
+                <UserCredentials
+                  showOtpScreen={showOtpScreen}
+                  email={email}
+                  setEmail={setEmail}
+                />
               </motion.div>
             )}
           </AnimatePresence>

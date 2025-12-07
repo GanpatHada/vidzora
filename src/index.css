@@ -75,3 +75,12 @@ body::-webkit-scrollbar-track {
   animation: wave 6s ease-in-out infinite;
   background-size: 200% 200%;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

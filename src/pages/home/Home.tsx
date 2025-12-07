@@ -1,43 +1,33 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect } from "react";
+import HomeSkeleton from "./HomeSkeleton";
+import Categories from "./Categories";
+import { useVideoStore } from "../../store/videoStore";
+import Spinner from "../../components/Spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchPopularVideos } from "../../services/VideoService";
-import { GoDotFill } from "react-icons/go";
+import VideoCard from "../../components/VideoCard";
 
 const Home: React.FC = () => {
-  const [videos, setVideos] = useState<any[]>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-
-  const loadMoreVideos = async () => {
-    const result = await fetchPopularVideos(page);
-
-    if (result.success) {
-      const newVideos = result.data.hits;
-      setVideos((prev) => [...prev, ...newVideos]);
-      setPage((prev) => prev + 1);
-
-      if (newVideos.length === 0) {
-        setHasMore(false);
-      }
-    } else {
-      setHasMore(false);
-      console.error(result.error);
-    }
-  };
+  const { videos, isLoading, error, fetchVideos, fetchMoreVideos, hasMore } =
+    useVideoStore();
 
   useEffect(() => {
-    loadMoreVideos();
-  }, []);
+    fetchVideos();
+  }, [fetchVideos]);
+
+  if (error)
+    return <div className="text-white p-4 pt-[120px]">Error: {error}</div>;
 
   return (
-    <div id="home-page" className="text-white p-4">
+    <div id="home-page" className="text-white p-4 pt-[120px]">
+      <Categories />
+      {videos.length === 0 && isLoading && <HomeSkeleton />}
       <InfiniteScroll
         dataLength={videos.length}
-        next={loadMoreVideos}
+        next={fetchMoreVideos}
         hasMore={hasMore}
-        loader={<span className="loader"></span>}
+        loader={<Spinner />}
         endMessage={
-          <p className="text-center py-4 text-gray-400">🎉 You have seen it all!</p>
+          <div className="text-center text-gray-500 py-4">No more videos</div>
         }
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -49,75 +39,5 @@ const Home: React.FC = () => {
     </div>
   );
 };
-
-type VideoCardProps = {
-  video: any;
-};
-
-const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const handleMouseEnter = () => videoRef.current?.play();
-  const handleMouseLeave = () => {
-    if (!videoRef.current) return;
-    videoRef.current.pause();
-    videoRef.current.currentTime = 0;
-  };
-
-  return (
-    <div
-      className="
-        group cursor-pointer relative rounded-lg overflow-hidden
-        p-4
-        transition-all duration-300
-        before:content-[''] before:absolute before:inset-0
-        before:rounded-xl before:bg-gray-400/30
-        before:opacity-0 before:scale-90
-        before:transition-all before:duration-500 before:origin-center
-        hover:before:scale-100 hover:before:opacity-100
-        before:z-0
-      "
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* VIDEO CONTAINER */}
-      <div className="relative w-full aspect-3/2 bg-gray-500/20 rounded-xl overflow-hidden duration-500 group-hover:rounded-none">
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover transition-all "
-          poster={video.videos.small.thumbnail || video.userImageURL}
-          muted
-          controls={false}
-          preload="metadata"
-        >
-          <source src={video.videos.tiny.url} type="video/mp4" />
-        </video>
-      </div>
-
-      {/* TEXT INFO */}
-      <div className="mt-2 flex gap-4 relative z-10">
-        <img
-          className="h-10 w-10 shrink-0 rounded-full object-cover"
-          src={video.userImageURL}
-          alt={video.user}
-        />
-        <div className="flex flex-col gap-2">
-          <h1 className="text-base font-semibold line-clamp-1 text-white">
-            {video.tags || "Untitled Video"}
-          </h1>
-          <div className="flex flex-col gap-0.5">
-          <p className="text-sm text-gray-400">{video.user}</p>
-          <div className="flex items-center gap-2 text-gray-400 text-sm">
-            <span>{video.views?.toLocaleString()} views</span>
-            <GoDotFill />
-            <span>{video.likes?.toLocaleString()} likes</span>
-          </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 
 export default Home;

@@ -1,0 +1,24 @@
+[
+  { "id": 0, "name": "All" },
+  { "id": 1, "name": "Backgrounds" },
+  { "id": 2, "name": "Fashion" },
+  { "id": 3, "name": "Nature" },
+  { "id": 4, "name": "Science" },
+  { "id": 5, "name": "Education" },
+  { "id": 6, "name": "Feelings" },
+  { "id": 7, "name": "Health" },
+  { "id": 8, "name": "People" },
+  { "id": 9, "name": "Religion" },
+  { "id": 10, "name": "Places" },
+  { "id": 11, "name": "Animals" },
+  { "id": 12, "name": "Industry" },
+  { "id": 13, "name": "Computer" },
+  { "id": 14, "name": "Food" },
+  { "id": 15, "name": "Sports" },
+  { "id": 16, "name": "Transportation" },
+  { "id": 17, "name": "Travel" },
+  { "id": 18, "name": "Buildings" },
+  { "id": 19, "name": "Business" },
+  { "id": 20, "name": "Music" }
+]
+
