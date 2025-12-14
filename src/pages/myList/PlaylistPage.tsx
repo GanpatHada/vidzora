@@ -63,9 +63,9 @@ const PlaylistPage: React.FC = () => {
     }
   };
 
-  const handleDeleteVideo = async (videoId: number) => {
+  const handleDeleteVideo = async (videoId: string) => {
     if (!playlistId) return;
-    const success = await deleteVideoFromPlaylist(playlistId, String(videoId));
+    const success = await deleteVideoFromPlaylist(playlistId, videoId);
     if (success) {
       toast.success("Video removed from playlist");
       setVideos(videos.filter(v => v.id !== videoId));
