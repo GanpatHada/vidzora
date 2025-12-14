@@ -34,6 +34,7 @@ body::-webkit-scrollbar-track {
     display: inline-block;
     box-sizing: border-box;
     animation: rotation 0.5s linear infinite;
+    
     }
 
     @keyframes rotation {

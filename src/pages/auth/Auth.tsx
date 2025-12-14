@@ -217,8 +217,6 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
         return;
       }
       
-      toast.success("OTP verified successfully");
-      
       const user = session.user;
 
       // Check if user exists in our public `users` table
@@ -235,7 +233,7 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
       let finalUser = existingUser;
 
       // If user does not exist in our table, create them
-      if (!existingUser) {
+      if (!finalUser) {
         const { data: newUser, error: insertError } = await supabase
           .from("users")
           .insert({
@@ -247,15 +245,34 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
           .single();
 
         if (insertError) {
-          toast.error("Failed to create user profile.");
-          return;
+          if (insertError.code === "23505") { // Handle race condition
+            const { data: refetchedUser, error: refetchError } = await supabase
+              .from("users")
+              .select("*")
+              .eq("id", user.id)
+              .single();
+
+            if (refetchError) {
+              toast.error("Failed to retrieve user profile after conflict.");
+              return;
+            }
+            finalUser = refetchedUser;
+          } else {
+            toast.error(`Failed to create user profile: ${insertError.message}`);
+            return;
+          }
+        } else {
+          finalUser = newUser;
         }
-        finalUser = newUser;
       }
 
-      setUser(finalUser);
-      toast.success("Welcome!");
-      navigate("/");
+      if (finalUser) {
+          setUser(finalUser);
+          toast.success("Welcome!");
+          navigate("/");
+      } else {
+          toast.error("Could not get user profile.");
+      }
     } catch (err: any) {
       toast.error(err.message || "An unexpected error occurred.");
     } finally {

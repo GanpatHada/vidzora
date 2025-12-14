@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { searchVideos } from "../../services/VideoService";
+import { searchVideos } from "../../services/videoService";
 import VideoCard from "../../components/VideoCard";
 import SearchSkeleton from "./SearchSkeleton";
 import { IoMdClose } from "react-icons/io";
