@@ -1,10 +1,6 @@
 import React, { useState, useRef } from "react";
 import { HiDotsVertical } from "react-icons/hi";
-import {
-  MdWatchLater,
-  MdFavoriteBorder,
-  MdFavorite,
-} from "react-icons/md";
+import { MdWatchLater, MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { useClickOutside } from "../../hooks/useClickOutside";
 
 type WatchLaterVideoMenuProps = {
@@ -22,13 +18,15 @@ const WatchLaterVideoMenu: React.FC<WatchLaterVideoMenuProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  useClickOutside(menuRef as React.RefObject<HTMLElement>, () => setIsOpen(false));
+  useClickOutside(menuRef as React.RefObject<HTMLElement>, () =>
+    setIsOpen(false),
+  );
 
   return (
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-         className="text-white focus:outline-none hover:bg-gray-50/20 rounded-full p-2 cursor-pointer"
+        className="text-white focus:outline-none hover:bg-gray-50/20 rounded-full p-2 cursor-pointer"
       >
         <HiDotsVertical size={18} />
       </button>

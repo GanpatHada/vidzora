@@ -40,6 +40,7 @@ const Navbar: React.FC = () => {
         <li className="flex items-center">
           <Link
             to="/search"
+            aria-label="Search videos"
             className="flex items-center justify-center h-8 w-8 text-2xl hover:text-blue-500 cursor-pointer rounded-full"
           >
             <IoMdSearch />
@@ -50,7 +51,10 @@ const Navbar: React.FC = () => {
             <div className="h-8 w-8 bg-gray-700 rounded-full animate-pulse" />
           ) : user ? (
             <>
-              <button onClick={toggleMenu} className="flex items-center justify-center h-8 w-8 rounded-full text-white text-md cursor-pointer ">
+              <button
+                onClick={toggleMenu}
+                className="flex items-center justify-center h-8 w-8 rounded-full text-white text-md cursor-pointer "
+              >
                 {avatarUrl ? (
                   <img
                     src={avatarUrl}

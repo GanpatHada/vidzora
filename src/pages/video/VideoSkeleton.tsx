@@ -1,10 +1,13 @@
 import React from "react";
 
-const VideoSkeleton:React.FC = () => {
+const VideoSkeleton: React.FC = () => {
   return (
     <div className="text-white pt-20 px-4 md:px-8 lg:px-16 xl:px-20 grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2">
-        <div className="relative w-full overflow-hidden" style={{ paddingTop: "56.25%" }}>
+        <div
+          className="relative w-full overflow-hidden"
+          style={{ paddingTop: "56.25%" }}
+        >
           <div className="absolute top-0 left-0 w-full h-full bg-gray-700 animate-pulse"></div>
         </div>
         <div className="mt-4">

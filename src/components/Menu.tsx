@@ -15,7 +15,7 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ closeMenu }) => {
   const menuRef = useRef<HTMLDivElement>(null);
-  const { user, setUser, signOut} = useUserStore();
+  const { user, setUser, signOut } = useUserStore();
   const navigate = useNavigate();
 
   useClickOutside(menuRef as React.RefObject<HTMLElement>, closeMenu);
@@ -40,7 +40,7 @@ const Menu: React.FC<MenuProps> = ({ closeMenu }) => {
       <ul className="flex flex-col gap-6 p-6 text-white">
         {user ? (
           <>
-          <li>
+            <li>
               <Link
                 className="flex items-center gap-3 hover:text-blue-500"
                 to="/my-profile"
@@ -49,7 +49,7 @@ const Menu: React.FC<MenuProps> = ({ closeMenu }) => {
               </Link>
             </li>
 
-            {/* My List */}
+  
             <li>
               <Link
                 className="flex items-center gap-3 hover:text-blue-500"
@@ -59,19 +59,28 @@ const Menu: React.FC<MenuProps> = ({ closeMenu }) => {
               </Link>
             </li>
             <li>
-              <Link className="flex items-center gap-3 hover:text-blue-500" to="/history">
+              <Link
+                className="flex items-center gap-3 hover:text-blue-500"
+                to="/history"
+              >
                 <WiTime3 size={20} /> History
               </Link>
             </li>
 
             <li>
-              <Link className="flex items-center gap-3 hover:text-blue-500" to="/favourites">
+              <Link
+                className="flex items-center gap-3 hover:text-blue-500"
+                to="/favourites"
+              >
                 <IoMdVideocam size={20} /> Favourites
               </Link>
             </li>
 
             <li>
-              <Link className="flex items-center gap-3 hover:text-blue-500" to="/watch-later">
+              <Link
+                className="flex items-center gap-3 hover:text-blue-500"
+                to="/watch-later"
+              >
                 <MdOutlineWatchLater size={20} /> Watch Later
               </Link>
             </li>

@@ -8,7 +8,10 @@ type SuggestedVideoCardProps = {
 
 const SuggestedVideoCard: React.FC<SuggestedVideoCardProps> = ({ video }) => {
   return (
-    <Link to={`/video/${video.id}`} className="flex gap-4 p-2 rounded-lg hover:bg-gray-700/50 transition-colors duration-200">
+    <Link
+      to={`/video/${video.id}`}
+      className="flex gap-4 p-2 rounded-lg hover:bg-gray-700/50 transition-colors duration-200"
+    >
       <img
         src={video.videos.tiny.thumbnail || video.userImageURL}
         alt={video.tags}
@@ -19,7 +22,9 @@ const SuggestedVideoCard: React.FC<SuggestedVideoCardProps> = ({ video }) => {
           {video.tags || "Untitled Video"}
         </h3>
         <p className="text-gray-400 text-sm mt-1">{video.user}</p>
-        <p className="text-gray-400 text-sm">{video.views?.toLocaleString()} views</p>
+        <p className="text-gray-400 text-sm">
+          {video.views?.toLocaleString()} views
+        </p>
       </div>
     </Link>
   );

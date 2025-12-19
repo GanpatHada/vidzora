@@ -36,6 +36,7 @@ const Categories: React.FC = () => {
       <div className="relative flex items-center">
         {canScrollLeft && (
           <button
+            aria-label="scroll-left"
             className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-black hover:bg-zinc-500 rounded-full"
             onClick={scrollLeft}
           >
@@ -45,6 +46,7 @@ const Categories: React.FC = () => {
 
         {canScrollRight && (
           <button
+            aria-label="scroll-right"
             className="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-black hover:bg-zinc-500 rounded-full z-10"
             onClick={scrollRight}
           >
@@ -57,7 +59,7 @@ const Categories: React.FC = () => {
           className="flex flex-nowrap gap-3 overflow-x-auto no-scrollbar w-full"
           onScroll={updateScrollButtons}
         >
-          {categories.map((cat:{id:number,name:string}) => (
+          {categories.map((cat: { id: number; name: string }) => (
             <button
               key={cat.id}
               onClick={() => setCategory(cat.name)}

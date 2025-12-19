@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPlaylistVideos, deletePlaylist, deleteVideoFromPlaylist } from "../../services/playlistService";
+import {
+  getPlaylistVideos,
+  deletePlaylist,
+  deleteVideoFromPlaylist,
+} from "../../services/playlistService";
 import PlaylistVideoCard from "./PlaylistVideoCard";
 import UserPageSkeleton from "../user/UserPageSkeleton";
 import type { Video } from "../../store/videoStore";
@@ -23,7 +27,8 @@ const PlaylistPage: React.FC = () => {
       const fetchPlaylistData = async () => {
         setLoading(true);
         try {
-          const { playlist: playlistData, videos: videoData } = await getPlaylistVideos(playlistId);
+          const { playlist: playlistData, videos: videoData } =
+            await getPlaylistVideos(playlistId);
           if (playlistData) {
             setPlaylist(playlistData);
             setVideos(videoData);
@@ -68,7 +73,7 @@ const PlaylistPage: React.FC = () => {
     const success = await deleteVideoFromPlaylist(playlistId, videoId);
     if (success) {
       toast.success("Video removed from playlist");
-      setVideos(videos.filter(v => v.id !== videoId));
+      setVideos(videos.filter((v) => v.id !== videoId));
     } else {
       toast.error("Failed to remove video from playlist");
     }
@@ -81,9 +86,13 @@ const PlaylistPage: React.FC = () => {
       </div>
     );
   }
-  
+
   if (error) {
-    return <div className="text-white p-5 pt-[120px] max-w-[1080px] m-auto">{error}</div>;
+    return (
+      <div className="text-white p-5 pt-[120px] max-w-[1080px] m-auto">
+        {error}
+      </div>
+    );
   }
 
   return (
@@ -100,11 +109,15 @@ const PlaylistPage: React.FC = () => {
           </button>
         </div>
         <p className="text-gray-400 mb-10">{playlist.description}</p>
-        
+
         {videos.length > 0 ? (
           <div className="flex flex-col gap-5">
             {videos.map((video) => (
-              <PlaylistVideoCard key={video.id} video={video} onDelete={() => handleDeleteVideo(video.id)} />
+              <PlaylistVideoCard
+                key={video.id}
+                video={video}
+                onDelete={() => handleDeleteVideo(video.id)}
+              />
             ))}
           </div>
         ) : (

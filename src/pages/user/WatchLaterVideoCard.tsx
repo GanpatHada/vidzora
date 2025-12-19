@@ -9,7 +9,8 @@ type WatchLaterVideoCardProps = {
 };
 
 const WatchLaterVideoCard: React.FC<WatchLaterVideoCardProps> = ({ video }) => {
-  const { addToFavorite, removeFromWatchLater, isFavorite } = useUserPageStore();
+  const { addToFavorite, removeFromWatchLater, isFavorite } =
+    useUserPageStore();
 
   return (
     <div className="flex gap-4 p-2 rounded-lg hover:bg-gray-700/50 transition-colors duration-200">

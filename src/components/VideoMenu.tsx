@@ -32,7 +32,7 @@ const VideoMenu: React.FC<VideoMenuProps> = ({
   const menuRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(menuRef as React.RefObject<HTMLElement>, () =>
-    setIsOpen(false)
+    setIsOpen(false),
   );
 
   return (

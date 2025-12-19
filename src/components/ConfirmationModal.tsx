@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import {useClickOutside} from "../hooks/useClickOutside";
+import { useClickOutside } from "../hooks/useClickOutside";
 import { IoMdClose } from "react-icons/io";
 
 interface ConfirmationModalProps {
@@ -11,7 +11,14 @@ interface ConfirmationModalProps {
   loading: boolean;
 }
 
-const ConfirmationModal = ({ open, onClose, onConfirm, title, message, loading }: ConfirmationModalProps) => {
+const ConfirmationModal = ({
+  open,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  loading,
+}: ConfirmationModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(modalRef as React.RefObject<HTMLElement>, onClose);
@@ -20,7 +27,10 @@ const ConfirmationModal = ({ open, onClose, onConfirm, title, message, loading }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75">
-      <div ref={modalRef} className="bg-zinc-800 rounded-lg shadow-xl p-6 w-full max-w-md">
+      <div
+        ref={modalRef}
+        className="bg-zinc-800 rounded-lg shadow-xl p-6 w-full max-w-md"
+      >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-white">{title}</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-white">

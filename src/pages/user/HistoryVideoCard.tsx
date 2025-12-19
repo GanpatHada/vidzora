@@ -9,7 +9,7 @@ type HistoryVideoCardProps = {
 };
 
 const HistoryVideoCard: React.FC<HistoryVideoCardProps> = ({ video }) => {
-  console.log(video);
+
   const {
     addToFavorite,
     addToWatchLater,

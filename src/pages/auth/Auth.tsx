@@ -185,7 +185,7 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    index: number
+    index: number,
   ) => {
     if (e.key === "Backspace" && otp[index] === "" && index > 0) {
       inputRefs.current[index - 1]?.focus();
@@ -199,7 +199,10 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
 
     setLoading(true);
     try {
-      const { data: { session }, error: otpError } = await supabase.auth.verifyOtp({
+      const {
+        data: { session },
+        error: otpError,
+      } = await supabase.auth.verifyOtp({
         email,
         token: enteredOtp,
         type: "email",
@@ -216,7 +219,7 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
         setLoading(false);
         return;
       }
-      
+
       const user = session.user;
 
       // Check if user exists in our public `users` table
@@ -245,7 +248,8 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
           .single();
 
         if (insertError) {
-          if (insertError.code === "23505") { // Handle race condition
+          if (insertError.code === "23505") {
+            // Handle race condition
             const { data: refetchedUser, error: refetchError } = await supabase
               .from("users")
               .select("*")
@@ -258,7 +262,9 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
             }
             finalUser = refetchedUser;
           } else {
-            toast.error(`Failed to create user profile: ${insertError.message}`);
+            toast.error(
+              `Failed to create user profile: ${insertError.message}`,
+            );
             return;
           }
         } else {
@@ -267,11 +273,11 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
       }
 
       if (finalUser) {
-          setUser(finalUser);
-          toast.success("Welcome!");
-          navigate("/");
+        setUser(finalUser);
+        toast.success("Welcome!");
+        navigate("/");
       } else {
-          toast.error("Could not get user profile.");
+        toast.error("Could not get user profile.");
       }
     } catch (err: any) {
       toast.error(err.message || "An unexpected error occurred.");

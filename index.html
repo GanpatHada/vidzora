@@ -2,21 +2,93 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <title>Vidzora - Watch, Share & Discover Videos</title>
+
+    <meta
+      name="description"
+      content="Vidzora is a modern video library web app where you can watch, save, and manage your favorite videos easily and securely."
+    />
+
+    <meta
+      name="keywords"
+      content="Vidzora, video platform, watch videos, share videos, creators, streaming"
+    />
+
+    <meta name="author" content="Vidzora" />
+
+    <link rel="canonical" href="https://vidzora.com/" />
+
     <link rel="icon" type="image/svg+xml" href="/vidzora.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Vidzora - Watch, Share & Discover Videos"
+    />
+    <meta
+      property="og:description"
+      content="A fast and modern video platform built for creators and viewers."
+    />
+    <meta property="og:url" content="https://vidzora.com/" />
+    <meta property="og:image" content="https://vidzora.com/og-image.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Vidzora - Watch, Share & Discover Videos"
+    />
+    <meta
+      name="twitter:description"
+      content="Discover, watch, and share videos on Vidzora."
+    />
+    <meta name="twitter:image" content="https://vidzora.com/og-image.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
-    <title>vidzora</title>
+    <style>
+      html {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          "Helvetica Neue",
+          sans-serif;
+      }
+    </style>
   </head>
+
   <body>
+    <!-- SEO fallback for JS-disabled browsers -->
+    <noscript>
+      <h1>Vidzora - Video Streaming Platform</h1>
+      <p>
+        Vidzora lets you watch, share, and discover videos from creators around
+        the world.
+      </p>
+    </noscript>
+
     <div id="root"></div>
+
+    <!-- Vite Entry -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

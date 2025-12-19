@@ -1,4 +1,3 @@
-
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { supabase } from "../supabaseClient";
@@ -114,8 +113,15 @@ export const useUserPageStore = create<UserPageStore>()(
           { data: watchLaterData, error: watchLaterError },
           { data: favouritesData, error: favouritesError },
         ] = await Promise.all([
-          supabase.from("watch_later").select("id, video_id, created_at").eq("user_id", userId).order("created_at", { ascending: false }),
-          supabase.from("favourites").select("id, video_id").eq("user_id", userId),
+          supabase
+            .from("watch_later")
+            .select("id, video_id, created_at")
+            .eq("user_id", userId)
+            .order("created_at", { ascending: false }),
+          supabase
+            .from("favourites")
+            .select("id, video_id")
+            .eq("user_id", userId),
         ]);
 
         if (watchLaterError || favouritesError) {
@@ -167,8 +173,15 @@ export const useUserPageStore = create<UserPageStore>()(
           { data: favouritesData, error: favouritesError },
           { data: watchLaterData, error: watchLaterError },
         ] = await Promise.all([
-          supabase.from("favourites").select("id, video_id, created_at").eq("user_id", userId).order("created_at", { ascending: false }),
-          supabase.from("watch_later").select("id, video_id").eq("user_id", userId),
+          supabase
+            .from("favourites")
+            .select("id, video_id, created_at")
+            .eq("user_id", userId)
+            .order("created_at", { ascending: false }),
+          supabase
+            .from("watch_later")
+            .select("id, video_id")
+            .eq("user_id", userId),
         ]);
 
         if (favouritesError || watchLaterError) {
@@ -222,9 +235,19 @@ export const useUserPageStore = create<UserPageStore>()(
           { data: favouritesData, error: favouritesError },
           { data: watchLaterData, error: watchLaterError },
         ] = await Promise.all([
-          supabase.from("history").select("id, video_id, created_at").eq("user_id", userId).order("created_at", { ascending: false }),
-          supabase.from("favourites").select("id, video_id").eq("user_id", userId),
-          supabase.from("watch_later").select("id, video_id").eq("user_id", userId),
+          supabase
+            .from("history")
+            .select("id, video_id, created_at")
+            .eq("user_id", userId)
+            .order("created_at", { ascending: false }),
+          supabase
+            .from("favourites")
+            .select("id, video_id")
+            .eq("user_id", userId),
+          supabase
+            .from("watch_later")
+            .select("id, video_id")
+            .eq("user_id", userId),
         ]);
 
         if (historyError || favouritesError || watchLaterError) {
@@ -265,6 +288,5 @@ export const useUserPageStore = create<UserPageStore>()(
         set({ error, isLoading: false });
       }
     },
-  }))
+  })),
 );
-

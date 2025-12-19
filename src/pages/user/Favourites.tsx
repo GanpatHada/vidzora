@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { useUserPageStore } from "../../store/userPageStore";
 import UserPageSkeleton from "./UserPageSkeleton";
@@ -6,7 +5,7 @@ import FavouriteVideoCard from "./FavouriteVideoCard";
 import { useUserStore } from "../../store/userStore";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Favourites:React.FC = () => {
+const Favourites: React.FC = () => {
   const { fetchFavourites, videos, isLoading, error, clearVideos } =
     useUserPageStore();
   const { isLoading: isUserLoading, user } = useUserStore();

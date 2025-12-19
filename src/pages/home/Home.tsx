@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import HomeSkeleton from "./HomeSkeleton";
 import Categories from "./Categories";
 import { useVideoStore } from "../../store/videoStore";
@@ -16,17 +16,13 @@ const Home: React.FC = () => {
     hasMore,
   } = useVideoStore();
 
-  /* ---------- Initial Load ---------- */
+
   useEffect(() => {
     fetchVideos();
   }, [fetchVideos]);
 
   if (error) {
-    return (
-      <div className="text-white p-4 pt-[120px]">
-        Error: {error}
-      </div>
-    );
+    return <div className="text-white p-4 pt-[120px]">Error: {error}</div>;
   }
 
   return (

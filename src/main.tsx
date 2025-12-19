@@ -1,20 +1,21 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
-
 createRoot(document.getElementById("root")!).render(
-    <BrowserRouter>
-        <Toaster
-        toastOptions={{
-          style: {
-            background: "#27272a",
-            color: "#fff",
-          },
-        }}
-      />
-        <App />
-    </BrowserRouter>
+  <BrowserRouter>
+    <Toaster
+      toastOptions={{
+        style: {
+          background: "#27272a",
+          color: "#fff",
+        },
+      }}
+    />
+    <main id="main-content">
+      <App />
+    </main>
+  </BrowserRouter>,
 );

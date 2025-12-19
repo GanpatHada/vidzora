@@ -5,7 +5,7 @@ import UserPageSkeleton from "./UserPageSkeleton";
 import { useUserStore } from "../../store/userStore";
 import { motion, AnimatePresence } from "framer-motion";
 
-const History:React.FC = () => {
+const History: React.FC = () => {
   const { fetchHistory, videos, isLoading, error, clearVideos } =
     useUserPageStore();
   const { isLoading: isUserLoading, user } = useUserStore();

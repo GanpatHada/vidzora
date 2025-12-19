@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserPageSkeleton:React.FC= () => {
+const UserPageSkeleton: React.FC = () => {
   return (
     <div className="w-full">
       <div className="h-8 w-48 bg-gray-700 animate-pulse mb-5"></div>

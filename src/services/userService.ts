@@ -2,7 +2,7 @@ import { supabase } from "../supabaseClient";
 
 export const isVideoInWatchLater = async (
   userId: string,
-  videoId: string
+  videoId: string,
 ): Promise<boolean> => {
   const { data, error } = await supabase
     .from("watch_later")
@@ -18,7 +18,6 @@ export const isVideoInWatchLater = async (
 
   return !!data;
 };
-
 
 export const addToWatchLater = async (userId: string, videoId: string) => {
   const { data, error } = await supabase
@@ -43,7 +42,7 @@ export const removeFromWatchLater = async (userId: string, videoId: string) => {
 // == Favorites Functions ==
 export const isVideoInFavorites = async (
   userId: string,
-  videoId: string
+  videoId: string,
 ): Promise<boolean> => {
   const { data, error } = await supabase
     .from("favourites")
@@ -141,13 +140,18 @@ export const getUserProfile = async (userId: string) => {
 
 export const updateUserProfile = async (
   userId: string,
-  email:string,
+  email: string,
   fullName: string,
-  profilePictureId:number
+  profilePictureId: number,
 ) => {
   const { data, error } = await supabase
     .from("users")
-    .upsert({ id: userId,email, full_name: fullName, profile_picture: profilePictureId})
+    .upsert({
+      id: userId,
+      email,
+      full_name: fullName,
+      profile_picture: profilePictureId,
+    })
     .select();
 
   if (error) {

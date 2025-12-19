@@ -41,21 +41,24 @@ const Search = () => {
     setResults([]);
     setSearched(false);
   };
-  
+
   const handleMicSearch = () => {
     toast.success("Voice search coming soon!");
-  }
+  };
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
     setSearched(false);
-  }
+  };
 
   return (
     <div className="text-white min-h-screen">
       <div className="fixed top-16 left-0 right-0 bg-black z-20 py-4 px-4 md:px-8">
         <div className="max-w-3xl mx-auto">
-          <form onSubmit={handleSearch} className="relative w-full flex items-center">
+          <form
+            onSubmit={handleSearch}
+            className="relative w-full flex items-center"
+          >
             <input
               type="text"
               value={query}
@@ -112,4 +115,3 @@ const Search = () => {
 };
 
 export default Search;
-

@@ -8,7 +8,10 @@ type PlaylistVideoCardProps = {
   onDelete: () => void;
 };
 
-const PlaylistVideoCard: React.FC<PlaylistVideoCardProps> = ({ video, onDelete }) => {
+const PlaylistVideoCard: React.FC<PlaylistVideoCardProps> = ({
+  video,
+  onDelete,
+}) => {
   return (
     <div className="flex gap-4 p-2 rounded-lg hover:bg-gray-700/50 transition-colors duration-200">
       <Link to={`/video/${video.id}`} className="shrink-0">
@@ -29,10 +32,7 @@ const PlaylistVideoCard: React.FC<PlaylistVideoCardProps> = ({ video, onDelete }
         </Link>
       </div>
       <div className="shrink-0">
-        <VideoMenu
-          video={video}
-          onDeleteFromPlaylist={onDelete}
-        />
+        <VideoMenu video={video} onDeleteFromPlaylist={onDelete} />
       </div>
     </div>
   );

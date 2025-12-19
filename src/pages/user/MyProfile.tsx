@@ -5,7 +5,12 @@ import toast, { Toaster } from "react-hot-toast";
 import { updateUserProfile } from "../../services/userService";
 
 const MyProfile: React.FC = () => {
-  const { user, profile, setProfile, isLoading: isUserLoading } = useUserStore();
+  const {
+    user,
+    profile,
+    setProfile,
+    isLoading: isUserLoading,
+  } = useUserStore();
 
   const [fullName, setFullName] = useState("");
   const [profilePicture, setProfilePicture] = useState<number>(0);
@@ -29,7 +34,7 @@ const MyProfile: React.FC = () => {
         user.id,
         user.email,
         fullName,
-        profilePicture
+        profilePicture,
       );
 
       if (error) {
@@ -106,8 +111,7 @@ const MyProfile: React.FC = () => {
         </div>
       </div>
 
-      {/* Save button */}
-      <button
+            <button
         onClick={handleUpdateProfile}
         disabled={isSaving}
         className="w-full py-3 rounded-md bg-blue-600 hover:bg-blue-700

@@ -8,11 +8,21 @@ import {
   isVideoInFavorites,
   addToFavorites,
   removeFromFavorites,
-  addToHistory
+  addToHistory,
 } from "../../services/userService";
 import VideoSkeleton from "./VideoSkeleton";
-import { MdOutlineWatchLater, MdWatchLater, MdPlaylistAdd } from "react-icons/md";
-import { FaHeart, FaEye, FaDownload, FaComment, FaRegHeart } from "react-icons/fa";
+import {
+  MdOutlineWatchLater,
+  MdWatchLater,
+  MdPlaylistAdd,
+} from "react-icons/md";
+import {
+  FaHeart,
+  FaEye,
+  FaDownload,
+  FaComment,
+  FaRegHeart,
+} from "react-icons/fa";
 import { useUserStore } from "../../store/userStore";
 import toast from "react-hot-toast";
 import SuggestedVideoCard from "./SuggestedVideoCard";
@@ -30,7 +40,8 @@ const Video: React.FC = () => {
   const [isInFavorites, setIsInFavorites] = useState(false);
   const [isTogglingWatchLater, setIsTogglingWatchLater] = useState(false);
   const [isTogglingFavorites, setIsTogglingFavorites] = useState(false);
-  const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] = useState(false);
+  const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] =
+    useState(false);
 
   const { user } = useUserStore();
 
@@ -62,7 +73,7 @@ const Video: React.FC = () => {
           const suggestionsResult = await fetchPopularVideos();
           if (suggestionsResult.success && suggestionsResult.data.hits) {
             const filteredSuggestions = suggestionsResult.data.hits.filter(
-              (v: any) => v.id.toString() !== videoId
+              (v: any) => v.id.toString() !== videoId,
             );
             setSuggestedVideos(filteredSuggestions);
           }
@@ -135,7 +146,8 @@ const Video: React.FC = () => {
 
   if (loading) return <VideoSkeleton />;
   if (error) return <div className="text-white p-4 pt-20">Error: {error}</div>;
-  if (!video) return <div className="text-white p-4 pt-20">Video not found.</div>;
+  if (!video)
+    return <div className="text-white p-4 pt-20">Video not found.</div>;
 
   return (
     <>
@@ -148,7 +160,10 @@ const Video: React.FC = () => {
       )}
       <div className="text-white pt-20 px-4 md:px-8 lg:px-16 xl:px-20 grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
         <div className="lg:col-span-2">
-          <div className="relative w-full overflow-hidden" style={{ paddingTop: "56.25%" }}>
+          <div
+            className="relative w-full overflow-hidden"
+            style={{ paddingTop: "56.25%" }}
+          >
             <video
               src={video.videos.large.url}
               controls
@@ -161,15 +176,29 @@ const Video: React.FC = () => {
             <h1 className="text-3xl font-bold">{video.tags}</h1>
 
             <div className="flex items-center gap-4 mt-4">
-              <img src={video.userImageURL} alt={video.user} className="w-12 h-12 rounded-full object-cover" />
-              <p className="text-gray-200 text-lg font-semibold">{video.user}</p>
+              <img
+                src={video.userImageURL}
+                alt={video.user}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+              <p className="text-gray-200 text-lg font-semibold">
+                {video.user}
+              </p>
             </div>
 
             <div className="flex items-center flex-wrap gap-x-6 gap-y-2 mt-4 text-gray-300">
-              <span className="flex items-center gap-2"><FaEye /> {video.views?.toLocaleString()} views</span>
-              <span className="flex items-center gap-2"><FaHeart /> {video.likes?.toLocaleString()} likes</span>
-              <span className="flex items-center gap-2"><FaDownload /> {video.downloads?.toLocaleString()} downloads</span>
-              <span className="flex items-center gap-2"><FaComment /> {video.comments?.toLocaleString()} comments</span>
+              <span className="flex items-center gap-2">
+                <FaEye /> {video.views?.toLocaleString()} views
+              </span>
+              <span className="flex items-center gap-2">
+                <FaHeart /> {video.likes?.toLocaleString()} likes
+              </span>
+              <span className="flex items-center gap-2">
+                <FaDownload /> {video.downloads?.toLocaleString()} downloads
+              </span>
+              <span className="flex items-center gap-2">
+                <FaComment /> {video.comments?.toLocaleString()} comments
+              </span>
             </div>
 
             <div className="flex items-center gap-4 mt-6">
@@ -178,7 +207,11 @@ const Video: React.FC = () => {
                 disabled={isTogglingWatchLater}
                 className="flex items-center gap-1 px-3 py-2 bg-gray-700 rounded-full hover:bg-gray-600 transition-colors disabled:opacity-50"
               >
-                {isInWatchLater ? <MdWatchLater size={20} /> : <MdOutlineWatchLater size={20} />}
+                {isInWatchLater ? (
+                  <MdWatchLater size={20} />
+                ) : (
+                  <MdOutlineWatchLater size={20} />
+                )}
                 Watch Later
               </button>
 
@@ -187,7 +220,11 @@ const Video: React.FC = () => {
                 disabled={isTogglingFavorites}
                 className="flex items-center gap-1 px-3 py-2 bg-gray-700 rounded-full hover:bg-gray-600 transition-colors disabled:opacity-50"
               >
-                {isInFavorites ? <FaHeart size={20} className="text-white" /> : <FaRegHeart size={20} />}
+                {isInFavorites ? (
+                  <FaHeart size={20} className="text-white" />
+                ) : (
+                  <FaRegHeart size={20} />
+                )}
                 Favorite
               </button>
 

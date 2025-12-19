@@ -2,21 +2,21 @@ import { create } from "zustand";
 import { fetchPopularVideos, searchVideos } from "../services/videoService";
 import categories from "../data/Categories.json";
 
-/* ---------------- Utilities ---------------- */
+
 
 const getCategoryFromTags = (tags: string): string => {
   const tagList = tags.split(", ");
   for (const tag of tagList) {
     const foundCategory = categories.find(
       (cat: { id: number; name: string }) =>
-        cat.name.toLowerCase() === tag.toLowerCase()
+        cat.name.toLowerCase() === tag.toLowerCase(),
     );
     if (foundCategory) return foundCategory.name;
   }
   return "Misc";
 };
 
-/* ---------------- Types ---------------- */
+
 
 interface VideoAsset {
   url: string;
@@ -52,7 +52,7 @@ interface PexelsHit {
   picture_id: string;
 }
 
-/* ---------------- Store Interface ---------------- */
+
 
 interface VideoStore {
   videos: Video[];
@@ -66,7 +66,7 @@ interface VideoStore {
   fetchMoreVideos: () => Promise<void>;
 }
 
-/* ---------------- Store ---------------- */
+
 
 export const useVideoStore = create<VideoStore>((set, get) => ({
   videos: [],
@@ -79,7 +79,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
   page: 1,
   hasMore: true,
 
-  /* ---------- Initial Fetch ---------- */
+  
   fetchVideos: async () => {
     set({
       isInitialLoading: true,
@@ -96,19 +96,19 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
         throw new Error(result.error as string);
       }
 
-     const mappedVideos: Video[] = result.data.hits.map((hit: PexelsHit) => ({
-  id: hit.id,
-  title: hit.tags,
-  category: getCategoryFromTags(hit.tags),
-  user: hit.user,
-  userImageURL: hit.userImageURL,
-  tags: hit.tags,
-  views: hit.views,
-  likes: hit.likes,
-  videos: {
-    ...hit.videos
-  },
-}));
+      const mappedVideos: Video[] = result.data.hits.map((hit: PexelsHit) => ({
+        id: hit.id,
+        title: hit.tags,
+        category: getCategoryFromTags(hit.tags),
+        user: hit.user,
+        userImageURL: hit.userImageURL,
+        tags: hit.tags,
+        views: hit.views,
+        likes: hit.likes,
+        videos: {
+          ...hit.videos,
+        },
+      }));
 
       set({
         videos: mappedVideos,
@@ -123,7 +123,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
     }
   },
 
-  /* ---------- Category Change ---------- */
+  
   setCategory: async (category: string) => {
     set({
       currentCategory: category,
@@ -154,7 +154,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
         views: hit.views,
         likes: hit.likes,
         videos: {
-         ...hit.videos
+          ...hit.videos,
         },
       }));
 
@@ -171,9 +171,9 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
     }
   },
 
-  /* ---------- Pagination ---------- */
+  
   fetchMoreVideos: async () => {
-    const { currentCategory, page} = get();
+    const { currentCategory, page } = get();
     const nextPage = page + 1;
     try {
       const result =
@@ -195,7 +195,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
         views: hit.views,
         likes: hit.likes,
         videos: {
-          ...hit.videos
+          ...hit.videos,
         },
       }));
 
@@ -208,7 +208,6 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
     } catch (err) {
       set({
         error: err instanceof Error ? err.message : "Unknown error",
-        
       });
     }
   },
