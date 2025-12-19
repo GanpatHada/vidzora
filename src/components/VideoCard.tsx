@@ -35,8 +35,8 @@ const VideoCard: React.FC<VideoCardProps> = React.memo(({ video }) => {
     <Link to={`/video/${video.id}`}>
       <div
         className="
-          group cursor-pointer relative rounded-lg overflow-hidden
-          p-4 transition-all duration-300
+          group cursor-pointer relative sm:rounded-lg overflow-hidden
+          sm:p-4 transition-all duration-300
           before:content-[''] before:absolute before:inset-0
           before:rounded-xl before:bg-gray-400/30
           before:opacity-0 before:scale-90
@@ -47,7 +47,7 @@ const VideoCard: React.FC<VideoCardProps> = React.memo(({ video }) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="relative w-full aspect-3/2 bg-gray-500/20 rounded-xl overflow-hidden duration-500 group-hover:rounded-none">
+        <div className="relative w-full aspect-3/2 bg-gray-500/20 sm:rounded-xl overflow-hidden duration-500 group-hover:rounded-none">
           <video
             ref={videoRef}
             className="w-full h-full object-cover transition-all"
@@ -68,13 +68,17 @@ const VideoCard: React.FC<VideoCardProps> = React.memo(({ video }) => {
           </div>
         </div>
 
-        <div className="mt-2 flex gap-4 relative z-10">
-          <LazyLoadImage
-            className="h-10 w-10 shrink-0 rounded-full object-cover"
-            src={video.userImageURL || undefined}
-            alt={video.user}
-            effect="blur"
-          />
+        <div className="mt-2 p-2 sm:p-0 flex gap-4 relative z-10">
+          <div className="mt-2 p-2 sm:p-0 flex gap-4 relative z-10 items-center">
+            <div className="relative h-10 w-10 shrink-0 rounded-full overflow-hidden">
+              <LazyLoadImage
+                src={video.userImageURL || undefined}
+                alt={video.user}
+                effect="blur"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
           <div className="flex flex-col gap-2">
             <h1 className="text-base font-semibold line-clamp-1 text-white">
               {video.tags || "Untitled Video"}

@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
     avatars.find((a) => a.id === Number(profile.profile_picture))?.url;
 
   return (
-    <nav className="bg-black text-white fixed top-0 z-30 w-full py-4 px-8 flex justify-between items-center">
+    <nav className="bg-black text-white fixed top-0 z-30 w-full py-4 px-4 sm:px-8 flex justify-between items-center">
       <ul className="">
         <li className="flex items-center">
           <Link to="/">
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
           </Link>
         </li>
       </ul>
-      <ul className="flex items-center gap-8">
+      <ul className="flex items-center gap-2 sm:gap-8">
         <li className="flex items-center">
           <Link
             to="/search"

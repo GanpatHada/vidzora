@@ -32,12 +32,12 @@ const Categories: React.FC = () => {
   };
 
   return (
-    <div className="bg-black fixed z-20 left-0 top-[60px] w-screen py-3 px-8">
+    <div className="bg-black fixed z-20 left-0 top-[60px] w-screen py-3 px-3 sm:px-8">
       <div className="relative flex items-center">
         {canScrollLeft && (
           <button
             aria-label="scroll-left"
-            className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-black hover:bg-zinc-500 rounded-full"
+            className="absolute hidden sm:block left-0 top-1/2 -translate-y-1/2 p-3 bg-black hover:bg-zinc-500 rounded-full"
             onClick={scrollLeft}
           >
             <FaChevronLeft className="text-white text-md" />
@@ -47,7 +47,7 @@ const Categories: React.FC = () => {
         {canScrollRight && (
           <button
             aria-label="scroll-right"
-            className="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-black hover:bg-zinc-500 rounded-full z-10"
+            className="absolute hidden sm:block right-0 top-1/2 -translate-y-1/2 p-3 bg-black hover:bg-zinc-500 rounded-full z-10"
             onClick={scrollRight}
           >
             <FaChevronRight className="text-white text-md" />
