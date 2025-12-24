@@ -31,7 +31,7 @@ const PlaylistVideoCard: React.FC<PlaylistVideoCardProps> = ({
           </p>
         </Link>
       </div>
-      <div className="shrink-0">
+      <div className="shrink-0 ml-auto">
         <VideoMenu video={video} onDeleteFromPlaylist={onDelete} />
       </div>
     </div>

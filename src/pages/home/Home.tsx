@@ -22,11 +22,11 @@ const Home: React.FC = () => {
   }, [fetchVideos]);
 
   if (error) {
-    return <div className="text-white sm:p-4 pt-[120px]">Error: {error}</div>;
+    return <div className="text-white pt-[120px] sm:pt-[120px] sm:p-4">Error: {error}</div>;
   }
 
   return (
-    <div id="home-page" className="text-white sm:p-4 pt-[120px]">
+    <div id="home-page"className="text-white pt-[120px] sm:pt-[120px] sm:p-4">
       <Categories />
       {videos.length === 0 && isInitialLoading && <HomeSkeleton />}
       {videos.length > 0 && (

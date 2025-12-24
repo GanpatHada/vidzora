@@ -31,7 +31,7 @@ const FavouriteVideoCard: React.FC<FavouriteVideoCardProps> = ({ video }) => {
           </p>
         </Link>
       </div>
-      <div className="shrink-0 ml-20">
+      <div className="shrink-0 ml-auto">
         <FavouriteVideoMenu
           video={video}
           isInWatchLater={isInWatchLater(String(video.id))}

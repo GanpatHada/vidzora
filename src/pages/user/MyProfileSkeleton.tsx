@@ -7,18 +7,18 @@ const MyProfileSkeleton: React.FC = () => {
       <div className="bg-slate-800 p-6 rounded-lg shadow-lg">
         <div className="flex items-center space-x-4 animate-pulse">
     
-          <div className="w-24 h-24 bg-gray-700 rounded-full"></div>
+          <div className="w-24 h-24 bg-gray-500/40 rounded-full"></div>
           <div>
       
-            <div className="h-7 w-48 bg-gray-700 rounded mb-2"></div>
+            <div className="h-7 w-48 bg-gray-500/40 rounded mb-2"></div>
       
-            <div className="h-5 w-64 bg-gray-700 rounded"></div>
+            <div className="h-5 w-64 bg-gray-500/40 rounded"></div>
           </div>
         </div>
 
         <div className="mt-6 animate-pulse">
     
-          <div className="h-10 w-32 bg-gray-700 rounded"></div>
+          <div className="h-10 w-32 bg-gray-500/40 rounded"></div>
         </div>
       </div>
     </div>

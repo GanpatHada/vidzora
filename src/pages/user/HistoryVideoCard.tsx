@@ -37,7 +37,7 @@ const HistoryVideoCard: React.FC<HistoryVideoCardProps> = ({ video }) => {
           </p>
         </Link>
       </div>
-      <div className="shrink-0 ml-20">
+      <div className="shrink-0 ml-auto">
         <VideoMenu
           video={video}
           isFavorite={isFavorite(String(video.id))}
