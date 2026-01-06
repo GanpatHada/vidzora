@@ -323,7 +323,7 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
           Enter OTP sent to <span className="text-blue-400">{email}</span>
         </h1>
 
-        <div className="flex gap-3">
+        <div className="flex gap-2 sm:gap-3">
           {otp.map((value, index) => (
             <TextField
               key={index}
@@ -340,10 +340,12 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ showUserCredential, email }) => {
                   fontSize: "1rem",
                   textAlign: "center",
                   padding: "8px 0",
-                  height: "auto",
+                  
+                  
+                 
                 },
-                width: "40px",
-                height: "40px",
+                height:'40px',
+                maxWidth:'40px',
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": { borderColor: "#52525b" },
                   "&:hover fieldset": { borderColor: "#71717a" },
@@ -433,7 +435,7 @@ const Auth: React.FC = () => {
             Login or Signup to Continue
           </h1>
         </header>
-        <main className="flex min-h-80 flex-1 p-8 overflow-hidden">
+        <main className="flex min-h-80 flex-1 p-4 sm:p-8 overflow-hidden">
           <AnimatePresence mode="wait">
             {showOtp ? (
               <motion.div
